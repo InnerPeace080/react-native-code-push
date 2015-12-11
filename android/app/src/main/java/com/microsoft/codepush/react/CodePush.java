@@ -106,14 +106,17 @@ public class CodePush {
         this.assetsBundleFileName = assetsBundleFileName;
         String binaryJsBundleUrl = ASSETS_BUNDLE_PREFIX + assetsBundleFileName;
         ZipFile applicationFile;
+        File applicationAPKFile ;
         long binaryResourcesModifiedTime = -1;
 
         ApplicationInfo ai = null;
         try {
             ai = applicationContext.getPackageManager().getApplicationInfo(applicationContext.getPackageName(), 0);
             applicationFile = new ZipFile(ai.sourceDir);
-            ZipEntry classesDexEntry = applicationFile.getEntry(RESOURCES_BUNDLE);
-            binaryResourcesModifiedTime = classesDexEntry.getTime();
+            applicationAPKFile = new File(ai.sourceDir);
+            ZipEntry classesDexEntry = applicationFile.getEntry(RESOURCES_BUNDLE);            
+            // binaryResourcesModifiedTime = classesDexEntry.getTime();
+            binaryResourcesModifiedTime = applicationAPKFile.lastModified();            
             applicationFile.close();
         } catch (PackageManager.NameNotFoundException | IOException e) {
             throw new CodePushUnknownException("Error in getting file information about compiled resources", e);
