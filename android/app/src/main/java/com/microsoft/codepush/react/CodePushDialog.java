@@ -31,7 +31,7 @@ public class CodePushDialog extends ReactContextBaseJavaModule{
             return;
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(fragmentActivity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         builder.setCancelable(false);
 
